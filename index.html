@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>Exercise</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<style>
+		body > div {
+			border: 1px solid #ccc;
+			display: inline-block;
+			width: 300px;
+			height: 150px;
+			margin: 10px;
+			padding: 15px;
+			background-repeat: no-repeat;
+			background-position-x: 10px;
+			background-position-y: 10px;
+			background-size: 90px 90px;
+		}
+
+		div > p, progressbar {
+			margin: 0 0 0 100px;
+		}
+
+		div > p:nth-child(1) {
+			color: #118de0;
+			font-weight: bold;
+			font-size: 18px;
+			padding-bottom: 10px;
+		}
+
+		div > p:nth-child(2) {
+			font-weight: bold;
+			font-size: 12px;
+			float: left;
+		}
+
+		div > p:nth-child(3) {
+			color: #118de0;
+			font-size: 12px;
+			text-align: right;
+		}
+
+		progressbar {
+			display: flex;
+			position: relative;
+		}
+
+		progressbar > .slider {
+			position: absolute;
+			background: #eee;
+			border-radius: 10px;
+			width: 100%;
+			height: 10px;
+		}
+
+		progressbar i {
+			position: absolute;
+			background: red;
+			border-radius: 10px;
+			height: 100%;
+		}
+
+		progressbar span {
+			position: absolute;
+			left: 50%;
+		}
+
+		progressbar span u {
+			border: 1px solid #ccc;
+			width: 1px;
+			height: 20px;
+			margin: 50%;
+		}
+	</style>
+</head>
+<body ng-controller="ApplicationController as ctrl">
+	<div ng-repeat="revPerf in ctrl.revenuePerformances" style="background-image: url({{ revPerf.owner.avatar ? revPerf.owner.avatar : 'dummy.png' }});">
+		<p>{{ revPerf.owner.name }}</p>
+		<p>{{ revPerf.revenue_actual | currency:"$":0 }}</p>
+		<p>{{ revPerf.revenue_target | currency:"$":0 }}</p>
+		<progressbar actual="{{revPerf.revenue_actual}}" target="{{revPerf.revenue_target}}" remain="{{ (revPerf.revenue_target - revPerf.revenue_actual) | currency:'$':0}}"/>
+	</div>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+	<script type="text/javascript" src="scripts/app.js"></script>
+	<script type="text/javascript" src="scripts/RevenuePerformances.js"></script>
+	<script type="text/javascript" src="scripts/ApplicationCtrl.js"></script>
+</body>
+</html>
